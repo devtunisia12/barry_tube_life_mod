@@ -349,6 +349,10 @@ void W_Precache(void)
 	UTIL_PrecacheOtherWeapon("weapon_sniperrifle");
 	UTIL_PrecacheOther("ammo_338");
 
+	// XM1014 WEAPON
+	UTIL_PrecacheOtherWeapon("weapon_xm1014");
+	UTIL_PrecacheOther("ammo_XM1014");
+
 	// mp5
 	UTIL_PrecacheOtherWeapon( "weapon_9mmAR" );
 	UTIL_PrecacheOther( "ammo_9mmAR" );

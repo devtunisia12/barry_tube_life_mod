@@ -84,7 +84,8 @@ public:
 #define WEAPON_MINIGUN			19
 #define WEAPON_HANDS			20
 #define WEAPON_DESERT_EAGLE     21
-#define WEAPON_SNIPERRIFLE      17
+#define WEAPON_SNIPERRIFLE      22
+#define WEAPON_XM1014			23
 
 #define WEAPON_ALLWEAPONS		(~(1<<WEAPON_SUIT))
 
@@ -951,6 +952,39 @@ public:
 
 private:
 	unsigned short m_usFireSniper;
+};
+
+class CXM1014 : public CBasePlayerWeapon
+{
+public:
+
+	void Spawn(void);
+	void Precache(void);
+	int iItemSlot() { return 3; }
+	int GetItemInfo(ItemInfo *p);
+	int AddToPlayer(CBasePlayer *pPlayer);
+
+	void PrimaryAttack(void);
+	//	void SecondaryAttack( void );
+	BOOL Deploy();
+	void Reload(void);
+	void WeaponIdle(void);
+	int m_fInReload;
+	float m_flNextReload;
+	int m_iShell;
+
+	virtual BOOL UseDecrement(void)
+	{
+#if defined( CLIENT_WEAPONS )
+		return TRUE;
+#else
+		return FALSE;
+#endif
+	}
+
+private:
+
+	unsigned short m_xm1014Fire;
 };
 
 class CHgun : public CBasePlayerWeapon
