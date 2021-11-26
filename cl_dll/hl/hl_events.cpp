@@ -43,6 +43,7 @@ void EV_Swort(struct event_args_s *args);
 void EV_Hands(struct event_args_s *args);
 void EV_FireDesertEagle(struct event_args_s *args);
 void EV_FireSniper(struct event_args_s *args);
+void EV_xm1014Fire(struct event_args_s *args); //CS XM1014 WEAPON
 
 
 void EV_TrainPitchAdjust( struct event_args_s *args );
@@ -88,4 +89,5 @@ void Game_HookEvents( void )
 	gEngfuncs.pfnHookEvent("events/hands.sc",                   EV_Hands);
 	gEngfuncs.pfnHookEvent("events/eagle.sc",                   EV_FireDesertEagle);
 	gEngfuncs.pfnHookEvent("events/sniper.sc",                  EV_FireSniper);
+	gEngfuncs.pfnHookEvent("events/xm1014Fire.sc",              EV_xm1014Fire);
 }

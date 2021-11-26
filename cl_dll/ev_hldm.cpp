@@ -77,6 +77,7 @@ void EV_Swort(struct event_args_s *args);
 void EV_Hands(struct event_args_s *args);
 void EV_FireDesertEagle(struct event_args_s *args);
 void EV_FireSniper(struct event_args_s *args);
+void EV_xm1014Fire(struct event_args_s *args); //CS XM1014 WEAPON
 
 
 void EV_TrainPitchAdjust( struct event_args_s *args );
@@ -1413,6 +1414,76 @@ void EV_FireMinigun(event_args_t *args)
 
 //======================
 //		 MINIGUN END
+//======================
+
+
+//======================
+//		CS XM1014 START
+//======================
+enum xm1014_e {
+
+	XM1014_IDLE = 0,
+	XM1014_SHOOT1,
+	XM1014_SHOOT2,
+	XM1014_INSERT,
+	XM1014_AFTER_RELOAD,
+	XM1014_START_RELOAD,
+	XM1014_DRAW,
+
+};
+void EV_xm1014Fire(event_args_t *args)
+{
+	int idx;
+	vec3_t origin;
+	vec3_t angles;
+	vec3_t velocity;
+
+	vec3_t ShellVelocity;
+	vec3_t ShellOrigin;
+	int shell;
+	vec3_t vecSrc, vecAiming;
+	vec3_t vecSpread;
+	vec3_t up, right, forward;
+	float flSpread = 0.01;
+
+	idx = args->entindex;
+	VectorCopy(args->origin, origin);
+	VectorCopy(args->angles, angles);
+	VectorCopy(args->velocity, velocity);
+
+	AngleVectors(angles, forward, right, up);
+
+	shell = gEngfuncs.pEventAPI->EV_FindModelIndex("models/shotgunshell.mdl");// brass shell
+
+	if (EV_IsLocal(idx))
+	{
+		// Add muzzle flash to current weapon model
+		EV_MuzzleFlash();
+		gEngfuncs.pEventAPI->EV_WeaponAnimation(XM1014_SHOOT1, 2);
+
+		V_PunchAxis(2, -2.0);
+	}
+
+	EV_GetDefaultShellInfo(args, origin, velocity, ShellVelocity, ShellOrigin, forward, right, up, 32, -12, 6);
+
+	EV_EjectBrass(ShellOrigin, ShellVelocity, angles[YAW], shell, TE_BOUNCE_SHOTSHELL);
+
+	gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/xm1014-1.wav", gEngfuncs.pfnRandomFloat(0.95, 1.0), ATTN_NORM, 0, 93 + gEngfuncs.pfnRandomLong(0, 0x1f));
+
+	EV_GetGunPosition(args, vecSrc, origin);
+	VectorCopy(forward, vecAiming);
+
+	if (gEngfuncs.GetMaxClients() > 1)
+	{
+		EV_HLDM_FireBullets(idx, forward, right, up, 4, vecSrc, vecAiming, 2048, BULLET_PLAYER_BUCKSHOT, 0, &tracerCount[idx - 1], 0.08716, 0.04362);
+	}
+	else
+	{
+		EV_HLDM_FireBullets(idx, forward, right, up, 6, vecSrc, vecAiming, 2048, BULLET_PLAYER_BUCKSHOT, 0, &tracerCount[idx - 1], 0.08716, 0.08716);
+	}
+}
+//======================
+//	   CS XM1014 END
 //======================
 
 
