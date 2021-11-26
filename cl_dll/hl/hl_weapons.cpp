@@ -70,6 +70,7 @@ Cak47 g_Ak47;
 CMinigun g_Minigun;
 CSwort g_Swort;
 CDesertEagle g_DesertEagle;
+CSniperrifle g_Sniperrifle;
 
 
 /*
@@ -627,6 +628,7 @@ void HUD_InitClientWeapons( void )
 	HUD_PrepEntity(&g_Minigun, &player);
 	HUD_PrepEntity(&g_Swort  , &player);
 	HUD_PrepEntity(&g_DesertEagle, &player);
+	HUD_PrepEntity(&g_Sniperrifle, &player);
 }
 
 /*
@@ -762,6 +764,10 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 
 		case WEAPON_DESERT_EAGLE:
 			pWeapon = &g_DesertEagle;
+			break;
+
+		case WEAPON_SNIPERRIFLE:
+			pWeapon = &g_Sniperrifle;
 			break;
 	}
 

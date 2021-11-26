@@ -76,6 +76,7 @@ void EV_FireMinigun(struct event_args_s *args);
 void EV_Swort(struct event_args_s *args);
 void EV_Hands(struct event_args_s *args);
 void EV_FireDesertEagle(struct event_args_s *args);
+void EV_FireSniper(struct event_args_s *args);
 
 
 void EV_TrainPitchAdjust( struct event_args_s *args );
@@ -1174,6 +1175,70 @@ void EV_Hands(event_args_t *args)
 }
 //======================
 //	   HANDS END 
+//======================
+
+//======================
+//	   SNIPERRIFLE START 
+//======================
+enum sniper_e
+{
+	SNIPER_DRAW = 0,
+	SNIPER_SLOWIDLE,
+	SNIPER_FIRE,
+	SNIPER_FIRELASTROUND,
+	SNIPER_RELOAD1,
+	SNIPER_RELOAD2,
+	SNIPER_RELOAD3,
+	SNIPER_SLOWIDLE2,
+	SNIPER_HOLSTER
+};
+
+void EV_FireSniper(event_args_t *args)
+{
+	int idx;
+	vec3_t origin;
+	vec3_t angles;
+	vec3_t velocity;
+
+	vec3_t vecSrc, vecAiming;
+	vec3_t up, right, forward;
+	float flSpread = 0.01;
+
+	idx = args->entindex;
+	VectorCopy(args->origin, origin);
+	VectorCopy(args->angles, angles);
+	VectorCopy(args->velocity, velocity);
+
+	AngleVectors(angles, forward, right, up);
+
+	if (EV_IsLocal(idx))
+	{
+		// Add muzzle flash to current weapon model
+		EV_MuzzleFlash();
+
+		if (args->iparam1 == 1) // Last round in clip
+		{
+			gEngfuncs.pEventAPI->EV_WeaponAnimation(SNIPER_FIRELASTROUND, 0);
+		}
+		else // Regular shot.
+		{
+			gEngfuncs.pEventAPI->EV_WeaponAnimation(SNIPER_FIRE, 0);
+		}
+
+		V_PunchAxis(0, -5.0);
+	}
+
+	// Play fire sound.
+	gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/sniper_fire.wav", 1.0f, ATTN_NORM, 0, PITCH_NORM);
+
+	EV_GetGunPosition(args, vecSrc, origin);
+
+	VectorCopy(forward, vecAiming);
+
+	EV_HLDM_FireBullets(idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_338, 0, 0, args->fparam1, args->fparam2);
+}
+//======================
+//	   SNIPERRIFLE END 
 //======================
 
 //======================

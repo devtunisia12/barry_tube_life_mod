@@ -18,6 +18,7 @@ typedef	enum
 	BULLET_PLAYER_BUCKSHOT, // shotgun
 	BULLET_PLAYER_CROWBAR, // crowbar swipe
 	BULLET_PLAYER_50CAL, // minigun
+	BULLET_PLAYER_338, // Sniper Rifle
 
 	BULLET_MONSTER_9MM,
 	BULLET_MONSTER_MP5,

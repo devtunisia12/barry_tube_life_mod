@@ -139,6 +139,13 @@ int CHud :: Redraw( float flTime, int intermission )
 
 	m_iIntermission = intermission;
 
+	//HUD for Sniper Rifle
+	if (m_Zoom.m_iHudMode > 0)
+	{
+		m_Zoom.Draw(flTime);
+		return 1;
+	}
+
 	// if no redrawing is necessary
 	// return 0;
 	
