@@ -180,6 +180,9 @@ void CHalfLifeMultiplay::RefreshSkillData( void )
 	// Swort whack
 	gSkillData.plrDmgSwort = 50;
 
+	// Rifle
+	gSkillData.plrDmgSniper = 100;
+
 }
 
 // longest the intermission can last, in seconds

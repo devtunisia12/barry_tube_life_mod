@@ -84,6 +84,7 @@ public:
 #define WEAPON_MINIGUN			19
 #define WEAPON_HANDS			20
 #define WEAPON_DESERT_EAGLE     21
+#define WEAPON_SNIPERRIFLE      17
 
 #define WEAPON_ALLWEAPONS		(~(1<<WEAPON_SUIT))
 
@@ -116,6 +117,7 @@ public:
 #define HANDS_WEIGHT		15
 #define SWORT_WEIGHT		15
 #define DESERT_EAGLE_WEIGHT 15
+#define SNIPERRIFLE_WEIGHT  10
 
 
 // weapon clip/carry ammo capacities
@@ -132,6 +134,7 @@ public:
 #define SNARK_MAX_CARRY			15
 #define HORNET_MAX_CARRY		8
 #define M203_GRENADE_MAX_CARRY	10
+#define _338_MAX_CARRY 30
 
 // the maximum amount of ammo each weapon's clip can hold
 #define WEAPON_NOCLIP			-1
@@ -157,6 +160,7 @@ public:
 #define MINIGUN_MAX_CLIP			100
 #define MINIGUN_DEFAULT_AMMO		100
 #define DESERT_EAGLE_MAX_CLIP 7
+#define SNIPERRIFLE_MAX_CLIP 5
 
 
 // the default amount of ammo that comes with each gun when it spawns
@@ -179,6 +183,7 @@ public:
 #define AK47_DEFAULT_GIVE			30
 #define MINIGUN_DEFAULT_GIVE			100
 #define DESERT_EAGLE_DEFAULT_GIVE   7
+#define SNIPERRIFLE_DEFAULT_GIVE 5
 
 // The amount of ammo given to a player by an ammo item.
 #define AMMO_URANIUMBOX_GIVE	20
@@ -195,6 +200,8 @@ public:
 #define AMMO_AK47CLIP_GIVE		30
 #define AMMO_MINIGUN_CHAINBOX_GIVE		200
 #define AMMO_MINIGUNCLIP_GIVE		200	
+#define AMMO_SNARKBOX_GIVE 5
+#define AMMO_SNIPERRIFLECLIP_GIVE SNIPERRIFLE_MAX_CLIP
 
 // bullet types
 typedef	enum
@@ -206,12 +213,12 @@ typedef	enum
 	BULLET_PLAYER_BUCKSHOT, // shotgun
 	BULLET_PLAYER_CROWBAR, // crowbar swipe
 	BULLET_PLAYER_50CAL, //Minigun
+	BULLET_PLAYER_338,// Sniper Rifle
 
 	BULLET_MONSTER_9MM,
 	BULLET_MONSTER_MP5,
 	BULLET_MONSTER_12MM,
 } Bullet;
-
 
 #define ITEM_FLAG_SELECTONEMPTY		1
 #define ITEM_FLAG_NOAUTORELOAD		2
@@ -912,6 +919,38 @@ public:
 
 private:
 	unsigned short m_usminigun;
+};
+
+class CSniperrifle : public CBasePlayerWeapon
+{
+public:
+	void Spawn(void);
+	void Precache(void);
+	int iItemSlot(void) { return 4; }
+	int GetItemInfo(ItemInfo *p);
+	int AddToPlayer(CBasePlayer *pPlayer);
+	void PrimaryAttack(void);
+	void SecondaryAttack(void);
+	BOOL Deploy(void);
+	void Holster(int skiplocal = 0);
+	void Reload(void);
+	void WeaponIdle(void);
+	void Shoot(float flSpread, float flCycleTime, BOOL fUseAutoAim);
+	float m_flSoundDelay;
+
+	BOOL m_fInZoom;// don't save this.
+
+	virtual BOOL UseDecrement(void)
+	{
+#if defined( CLIENT_WEAPONS )
+		return TRUE;
+#else
+		return FALSE;
+#endif
+	}
+
+private:
+	unsigned short m_usFireSniper;
 };
 
 class CHgun : public CBasePlayerWeapon

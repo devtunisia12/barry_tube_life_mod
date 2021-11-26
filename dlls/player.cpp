@@ -52,6 +52,7 @@ extern void CopyToBodyQue(entvars_t* pev);
 extern void respawn(entvars_t *pev, BOOL fCopyCorpse);
 extern Vector VecBModelOrigin(entvars_t *pevBModel );
 extern edict_t *EntSelectSpawnPoint( CBaseEntity *pPlayer );
+extern int gmsgZoom;// Zoom For Sniper Rifle
 
 // the world node graph
 extern CGraph	WorldGraph;
@@ -184,6 +185,7 @@ int gmsgSetFOV = 0;
 int gmsgShowMenu = 0;
 int gmsgGeigerRange = 0;
 int gmsgTeamNames = 0;
+int gmsgZoom = 0;//Zoom For Sniper Rifle
 
 int gmsgStatusText = 0;
 int gmsgStatusValue = 0; 
@@ -234,7 +236,8 @@ void LinkUserMessages( void )
 	gmsgTeamNames = REG_USER_MSG( "TeamNames", -1 );
 
 	gmsgStatusText = REG_USER_MSG("StatusText", -1);
-	gmsgStatusValue = REG_USER_MSG("StatusValue", 3); 
+	gmsgStatusValue = REG_USER_MSG("StatusValue", 3);
+	gmsgZoom = REG_USER_MSG("ZoomHud", 1);//Zoom For Sniper Rifle
 
 }
 
@@ -1135,6 +1138,7 @@ void CBasePlayer::TabulateAmmo()
 	ammo_uranium = AmmoInventory( GetAmmoIndex( "uranium" ) );
 	ammo_hornets = AmmoInventory( GetAmmoIndex( "Hornets" ) );
 	ammo_12mm = AmmoInventory(GetAmmoIndex("12mm"));
+	ammo_338 = AmmoInventory(GetAmmoIndex("338"));
 }
 
 
@@ -3567,6 +3571,8 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		GiveNamedItem("weapon_minigun");
 		GiveNamedItem("ammo_minigun");
 		GiveNamedItem("weapon_eagle");
+		GiveNamedItem("weapon_sniperrifle");
+		GiveNamedItem("ammo_338");
 #endif
 		gEvilImpulse101 = FALSE;
 		break;
@@ -4000,7 +4006,19 @@ void CBasePlayer :: UpdateClientData( void )
 			WRITE_BYTE( m_iFOV );
 		MESSAGE_END();
 
+		MESSAGE_BEGIN(MSG_ONE, gmsgZoom, NULL, pev);
+		WRITE_BYTE(0);
+		MESSAGE_END();
+
 		// cache FOV change at end of function, so weapon updates can see that FOV has changed
+	}
+
+	// Informations of Zoom sniper Rifle
+	if (m_iFOV != 0 && m_iFOV != 20 && m_iFOV != 40)
+	{
+		MESSAGE_BEGIN(MSG_ONE, gmsgZoom, NULL, pev);
+		WRITE_BYTE(1);
+		MESSAGE_END();
 	}
 
 	// HACKHACK -- send the message to display the game title

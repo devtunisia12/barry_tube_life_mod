@@ -345,6 +345,10 @@ void W_Precache(void)
 	// AK47
 	UTIL_PrecacheOtherWeapon("weapon_ak47");
 
+	// Sniper Rifle
+	UTIL_PrecacheOtherWeapon("weapon_sniperrifle");
+	UTIL_PrecacheOther("ammo_338");
+
 	// mp5
 	UTIL_PrecacheOtherWeapon( "weapon_9mmAR" );
 	UTIL_PrecacheOther( "ammo_9mmAR" );
@@ -673,7 +677,7 @@ void CBasePlayerWeapon::ItemPostFrame( void )
 		m_fInReload = FALSE;
 	}
 
-	if ( !(m_pPlayer->pev->button & IN_ATTACK ) )
+	if ((m_pPlayer->pev->button & IN_ATTACK ) )
 	{
 		m_flLastFireTime = 0.0f;
 	}

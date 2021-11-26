@@ -274,6 +274,9 @@ void CGameRules::RefreshSkillData ( void )
 	// Swort whack
 	gSkillData.plrDmgSwort = GetSkillCvar("sk_plr_swort");
 
+	// Sniper Rifle
+	gSkillData.plrDmgSniper = GetSkillCvar("sk_plr_snpr_bullet");
+
 
 	// MONSTER WEAPONS
 	gSkillData.monDmg12MM = GetSkillCvar( "sk_12mm_bullet");

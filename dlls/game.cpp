@@ -348,6 +348,12 @@ cvar_t	sk_plr_swort2 = { "sk_plr_swort2", "0" };
 cvar_t	sk_plr_swort3 = { "sk_plr_swort3", "0" };
 
 
+// Sniper Rifle
+cvar_t sk_plr_snpr_bullet1 = { "sk_plr_snpr_bullet1", "0" };
+cvar_t sk_plr_snpr_bullet2 = { "sk_plr_snpr_bullet2", "0" };
+cvar_t sk_plr_snpr_bullet3 = { "sk_plr_snpr_bullet3", "0" };
+
+
 // Zero Point Generator
 cvar_t	sk_plr_gauss1 = {"sk_plr_gauss1","0"};
 cvar_t	sk_plr_gauss2 = {"sk_plr_gauss2","0"};
@@ -829,6 +835,11 @@ void GameDLLInit( void )
 	CVAR_REGISTER(&sk_plr_swort1);// {"sk_plr_swort1","0"};
 	CVAR_REGISTER(&sk_plr_swort2);// {"sk_plr_swort2","0"};
 	CVAR_REGISTER(&sk_plr_swort3);// {"sk_plr_swort3","0"};
+
+	// Sniper Rifle
+	CVAR_REGISTER(&sk_plr_snpr_bullet1);// {"sk_plr_bullet1","0"};
+	CVAR_REGISTER(&sk_plr_snpr_bullet2);// {"sk_plr_bullet2","0"};
+	CVAR_REGISTER(&sk_plr_snpr_bullet3);// {"sk_plr_bullet3","0"};
 
 
 	// WORLD WEAPONS
