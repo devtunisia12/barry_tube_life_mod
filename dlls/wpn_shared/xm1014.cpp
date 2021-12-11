@@ -27,7 +27,6 @@
 #define VECTOR_CONE_DM_DOUBLESHOTGUN Vector( 0.17365, 0.04362, 0.00 ) // 20 degrees by 5 degrees
 
 enum xm1014_e {
-
 	XM1014_IDLE = 0,
 	XM1014_SHOOT1,
 	XM1014_SHOOT2,
@@ -35,7 +34,6 @@ enum xm1014_e {
 	XM1014_AFTER_RELOAD,
 	XM1014_START_RELOAD,
 	XM1014_DRAW,
-
 };
 
 LINK_ENTITY_TO_CLASS(weapon_xm1014, CXM1014);
@@ -50,7 +48,6 @@ void CXM1014::Spawn()
 
 	FallInit();// get ready to fall
 }
-
 
 void CXM1014::Precache(void)
 {
@@ -75,7 +72,6 @@ void CXM1014::Precache(void)
 	PRECACHE_SOUND("weapons/m3_pump.wav");	// cock gun
 
 	m_xm1014Fire = PRECACHE_EVENT(1, "events/xm1014Fire.sc");
-
 }
 
 int CXM1014::AddToPlayer(CBasePlayer *pPlayer)
@@ -90,11 +86,10 @@ int CXM1014::AddToPlayer(CBasePlayer *pPlayer)
 	return FALSE;
 }
 
-
 int CXM1014::GetItemInfo(ItemInfo *p)
 {
 	p->pszName = STRING(pev->classname);
-	p->pszAmmo1 = "ammo_XM1014";
+	p->pszAmmo1 = "buckshot";
 	p->iMaxAmmo1 = BUCKSHOT_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
@@ -107,8 +102,6 @@ int CXM1014::GetItemInfo(ItemInfo *p)
 
 	return 1;
 }
-
-
 
 BOOL CXM1014::Deploy()
 {
@@ -145,7 +138,6 @@ void CXM1014::PrimaryAttack()
 	flags = 0;
 #endif
 
-
 	m_pPlayer->pev->effects = (int)(m_pPlayer->pev->effects) | EF_MUZZLEFLASH;
 
 	Vector vecSrc = m_pPlayer->GetGunPosition();
@@ -169,7 +161,6 @@ void CXM1014::PrimaryAttack()
 
 	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_xm1014Fire, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, vecDir.x, vecDir.y, 0, 0, 0, 0);
 
-
 	if (!m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		// HEV suit - indicate out of ammo condition
 		m_pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
@@ -185,8 +176,6 @@ void CXM1014::PrimaryAttack()
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.2;
 	m_fInSpecialReload = 0;
 }
-
-
 
 void CXM1014::Reload(void)
 {
@@ -233,7 +222,6 @@ void CXM1014::Reload(void)
 		m_fInSpecialReload = 1;
 	}
 }
-
 
 void CXM1014::WeaponIdle(void)
 {
@@ -294,32 +282,3 @@ void CXM1014::WeaponIdle(void)
 		}
 	}
 }
-
-
-
-class CXM1014Ammo : public CBasePlayerAmmo
-{
-	void Spawn(void)
-	{
-		Precache();
-		SET_MODEL(ENT(pev), "models/w_shotbox.mdl");
-		CBasePlayerAmmo::Spawn();
-	}
-	void Precache(void)
-	{
-		PRECACHE_MODEL("models/w_shotbox.mdl");
-		PRECACHE_SOUND("items/9mmclip1.wav");
-	}
-	BOOL AddAmmo(CBaseEntity *pOther)
-	{
-		if (pOther->GiveAmmo(AMMO_BUCKSHOTBOX_GIVE, "ammo_XM1014", BUCKSHOT_MAX_CARRY) != -1)
-		{
-			EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
-			return TRUE;
-		}
-		return FALSE;
-	}
-};
-LINK_ENTITY_TO_CLASS(ammo_XM1014, CXM1014Ammo);
-
-
