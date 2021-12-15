@@ -325,7 +325,6 @@ void W_Precache(void)
 	// crowbar
 	UTIL_PrecacheOtherWeapon( "weapon_crowbar" );
 	UTIL_PrecacheOtherWeapon("weapon_swort");
-	UTIL_PrecacheOtherWeapon("weapon_hands");
 
 	// glock
 	UTIL_PrecacheOtherWeapon( "weapon_9mmhandgun" );
@@ -353,6 +352,9 @@ void W_Precache(void)
 
 	// AK47
 	UTIL_PrecacheOtherWeapon("weapon_ak47");
+
+	// HANDS
+	UTIL_PrecacheOtherWeapon("weapon_hands");
 
 #if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// python

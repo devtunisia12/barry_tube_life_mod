@@ -82,10 +82,10 @@ public:
 #define WEAPON_MINIGUN			17
 #define	WEAPON_SWORT			18
 #define WEAPON_AK47				19
-#define WEAPON_HANDS			20
 #define WEAPON_DESERT_EAGLE     21
 #define WEAPON_SNIPERRIFLE      22
 #define WEAPON_SHOTGUNA			23
+#define WEAPON_HANDS			24
 
 #define WEAPON_ALLWEAPONS		(~(1<<WEAPON_SUIT))
 
@@ -114,7 +114,6 @@ public:
 #define TRIPMINE_WEIGHT		-10
 #define MINIGUN_WEIGHT		40
 #define AK47_WEIGHT			25
-#define HANDS_WEIGHT		15
 #define SWORT_WEIGHT		15
 #define DESERT_EAGLE_WEIGHT 15
 #define SNIPERRIFLE_WEIGHT  10
@@ -1283,6 +1282,34 @@ private:
 	unsigned short m_usak47;
 };
 
+class CHANDS : public CBasePlayerWeapon
+{
+public:
+	void Spawn(void);
+	void Precache(void);
+	int iItemSlot(void) { return 1; }
+	void EXPORT SwingAgainHANDS(void);
+	void EXPORT SmackHANDS(void);
+	int GetItemInfo(ItemInfo *p);
+
+	void PrimaryAttack(void);
+	int SwingHANDS(int fFirst);
+	BOOL Deploy(void);
+	void Holster(int skiplocal = 0);
+	int m_iSwing;
+	TraceResult m_trHit;
+
+	virtual BOOL UseDecrement(void)
+	{
+#if defined( CLIENT_WEAPONS )
+		return TRUE;
+#else
+		return FALSE;
+#endif
+	}
+private:
+	unsigned short m_usHANDS;
+};
 
 
 #endif // WEAPONS_H
