@@ -72,11 +72,11 @@ void EV_xm1014Fire(struct event_args_s *args);
 void EV_FireAK47(struct event_args_s *args);
 void EV_FireMinigun(struct event_args_s *args);
 void EV_Swort(struct event_args_s *args);
-void EV_Hands(struct event_args_s *args);
 void EV_FireDesertEagle(struct event_args_s *args);
 void EV_FireSniper(struct event_args_s *args);
 void EV_FireShotGunASingle(struct event_args_s *args);
 void EV_FireShotGunADouble(struct event_args_s *args);
+void EV_Hands(struct event_args_s *args);
 
 
 void EV_TrainPitchAdjust( struct event_args_s *args );
@@ -1794,59 +1794,6 @@ void EV_FireMinigun(event_args_t *args)
 //======================
 
 //======================
-//	   HANDS START
-//======================
-
-enum hands_e
-{
-	HANDS_IDLE = 0,
-	HANDS_DRAW,
-	HANDS_HOLSTER,
-	HANDS_ATTACK1HIT,
-	HANDS_ATTACK1MISS,
-	HANDS_ATTACK2MISS,
-	HANDS_ATTACK2HIT,
-	HANDS_ATTACK3MISS,
-	HANDS_ATTACK3HIT
-};
-
-int g_iHands;
-
-//Only predict the miss sounds, hit sounds are still played 
-//server side, so players don't get the wrong idea.
-void EV_Hands(event_args_t *args)
-{
-	int idx;
-	vec3_t origin;
-	vec3_t angles;
-	vec3_t velocity;
-
-	idx = args->entindex;
-	VectorCopy(args->origin, origin);
-
-	//Play Swing sound
-	gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/swort_miss1.wav", 1, ATTN_NORM, 0, PITCH_NORM);
-
-	if (EV_IsLocal(idx))
-	{
-		gEngfuncs.pEventAPI->EV_WeaponAnimation(HANDS_ATTACK1MISS, 1);
-
-		switch ((g_iHands++) % 3)
-		{
-		case 0:
-			gEngfuncs.pEventAPI->EV_WeaponAnimation(HANDS_ATTACK1MISS, 1); break;
-		case 1:
-			gEngfuncs.pEventAPI->EV_WeaponAnimation(HANDS_ATTACK2MISS, 1); break;
-		case 2:
-			gEngfuncs.pEventAPI->EV_WeaponAnimation(HANDS_ATTACK1MISS, 1); break;
-		}
-	}
-}
-//======================
-//	   HANDS END 
-//======================
-
-//======================
 //	   SNIPERRIFLE START 
 //======================
 enum sniper_e
@@ -2221,6 +2168,58 @@ void EV_FireAK47(event_args_t *args)
 
 //======================
 //		 AK47 END
+//======================
+
+//======================
+//	   HANDS START
+//======================
+
+enum hands_e {
+	HANDS_IDLE = 0,
+	HANDS_DRAW,
+	HANDS_ATTACK1HIT,
+	HANDS_ATTACK1MISS,
+	HANDS_ATTACK2HIT,
+	HANDS_ATTACK2MISS,
+	HANDS_ATTACK3HIT,
+	HANDS_ATTACK3MISS
+};
+
+int g_iSwingHANDS;
+
+//Only predict the miss sounds, hit sounds are still played 
+//server side, so players don't get the wrong idea.
+void EV_Hands(event_args_t *args)
+{
+	int idx;
+	vec3_t origin;
+	vec3_t angles;
+	vec3_t velocity;
+
+	idx = args->entindex;
+	VectorCopy(args->origin, origin);
+
+	//Play Swing sound
+	gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/hands_miss1.wav", 1, ATTN_NORM, 0, PITCH_NORM);
+
+	if (EV_IsLocal(idx))
+	{
+		gEngfuncs.pEventAPI->EV_WeaponAnimation(HANDS_ATTACK1MISS, 1);
+
+		switch ((g_iSwing++) % 3)
+		{
+		case 0:
+			gEngfuncs.pEventAPI->EV_WeaponAnimation(HANDS_ATTACK1MISS, 1); break;
+		case 1:
+			gEngfuncs.pEventAPI->EV_WeaponAnimation(HANDS_ATTACK2MISS, 1); break;
+		case 2:
+			gEngfuncs.pEventAPI->EV_WeaponAnimation(HANDS_ATTACK3MISS, 1); break;
+		}
+	}
+}
+
+//======================
+//	   HANDS END 
 //======================
 
 

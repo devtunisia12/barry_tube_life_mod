@@ -73,6 +73,7 @@ CSwort g_Swort;
 CDesertEagle g_DesertEagle;
 CSniperrifle g_Sniperrifle;
 CShotgunA g_ShotgunA;
+CHANDS g_Hands;
 
 
 /*
@@ -649,6 +650,7 @@ void HUD_InitClientWeapons( void )
 	HUD_PrepEntity(&g_DesertEagle, &player);
 	HUD_PrepEntity(&g_Sniperrifle, &player);
 	HUD_PrepEntity(&g_ShotgunA, &player);
+	HUD_PrepEntity(&g_Hands, &player);
 }
 
 /*
@@ -796,6 +798,10 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 
 		case WEAPON_SHOTGUNA:
 			pWeapon = &g_ShotgunA;
+			break;
+
+		case WEAPON_HANDS:
+			pWeapon = &g_Hands;
 			break;
 	}
 
