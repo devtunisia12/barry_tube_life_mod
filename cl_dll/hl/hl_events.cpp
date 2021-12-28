@@ -37,6 +37,16 @@ void EV_EgonStop( struct event_args_s *args );
 void EV_HornetGunFire( struct event_args_s *args );
 void EV_TripmineFire( struct event_args_s *args );
 void EV_SnarkFire( struct event_args_s *args );
+void EV_xm1014Fire(struct event_args_s *args);
+void EV_FireMinigun(struct event_args_s *args);
+void EV_FireAK47(struct event_args_s *args);
+void EV_Swort(struct event_args_s *args);
+void EV_FireDesertEagle(struct event_args_s *args);
+void EV_FireSniper(struct event_args_s *args);
+void EV_FireSniper2(struct event_args_s *args);
+void EV_FireShotGunASingle(struct event_args_s *args);
+void EV_FireShotGunADouble(struct event_args_s *args);
+void EV_Hands(struct event_args_s *args);
 
 
 
@@ -77,4 +87,14 @@ void Game_HookEvents( void )
 	gEngfuncs.pfnHookEvent( "events/firehornet.sc",				EV_HornetGunFire );
 	gEngfuncs.pfnHookEvent( "events/tripfire.sc",				EV_TripmineFire );
 	gEngfuncs.pfnHookEvent( "events/snarkfire.sc",				EV_SnarkFire );
+	gEngfuncs.pfnHookEvent("events/xm1014Fire.sc",              EV_xm1014Fire);
+	gEngfuncs.pfnHookEvent("events/minigun.sc",                 EV_FireMinigun);
+	gEngfuncs.pfnHookEvent("events/ak47.sc",                    EV_FireAK47);
+	gEngfuncs.pfnHookEvent("events/swort.sc",                   EV_Swort);
+	gEngfuncs.pfnHookEvent("events/eagle.sc",                   EV_FireDesertEagle);
+	gEngfuncs.pfnHookEvent("events/sniper.sc",                  EV_FireSniper);
+	gEngfuncs.pfnHookEvent("events/sniper2.sc",                 EV_FireSniper2);
+	gEngfuncs.pfnHookEvent("events/autoshotgun2.sc",            EV_FireShotGunADouble);
+	gEngfuncs.pfnHookEvent("events/autoshotgun1.sc",            EV_FireShotGunASingle);
+	gEngfuncs.pfnHookEvent("events/hands.sc",                   EV_Hands);
 }
