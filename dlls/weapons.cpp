@@ -324,6 +324,7 @@ void W_Precache(void)
 
 	// crowbar
 	UTIL_PrecacheOtherWeapon( "weapon_crowbar" );
+	UTIL_PrecacheOtherWeapon("weapon_swort");
 
 	// glock
 	UTIL_PrecacheOtherWeapon( "weapon_9mmhandgun" );
@@ -333,6 +334,27 @@ void W_Precache(void)
 	UTIL_PrecacheOtherWeapon( "weapon_9mmAR" );
 	UTIL_PrecacheOther( "ammo_9mmAR" );
 	UTIL_PrecacheOther( "ammo_ARgrenades" );
+
+	// XM1014 WEAPON
+	UTIL_PrecacheOtherWeapon("weapon_xm1014");
+	UTIL_PrecacheOther("ammo_XM1014");
+
+	// minigun
+	UTIL_PrecacheOtherWeapon("weapon_minigun");
+	UTIL_PrecacheOther("ammo_minigun");
+
+	// Sniper Rifle
+	UTIL_PrecacheOtherWeapon("weapon_sniperrifle");
+	UTIL_PrecacheOther("ammo_338");
+
+	// Auto shotgun
+	UTIL_PrecacheOtherWeapon("weapon_autoshotgun");
+
+	// AK47
+	UTIL_PrecacheOtherWeapon("weapon_ak47");
+
+	// HANDS
+	UTIL_PrecacheOtherWeapon("weapon_hands");
 
 #if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// python
@@ -1615,3 +1637,18 @@ TYPEDESCRIPTION	CSatchel::m_SaveData[] =
 };
 IMPLEMENT_SAVERESTORE( CSatchel, CBasePlayerWeapon );
 
+TYPEDESCRIPTION	CShotgunA::m_SaveData[] =
+{
+	DEFINE_FIELD(CShotgunA, m_flNextReload, FIELD_TIME),
+	DEFINE_FIELD(CShotgunA, m_fInSpecialReload, FIELD_INTEGER),
+	DEFINE_FIELD(CShotgunA, m_flNextReload, FIELD_TIME),
+	// DEFINE_FIELD( CShotgunA, m_iShell, FIELD_INTEGER ),
+	DEFINE_FIELD(CShotgunA, m_flPumpTime, FIELD_TIME),
+};
+IMPLEMENT_SAVERESTORE(CShotgunA, CBasePlayerWeapon);
+
+TYPEDESCRIPTION    CDesertEagle::m_SaveData[] =
+{
+	DEFINE_FIELD(CDesertEagle, m_fSpotActive, FIELD_INTEGER),
+};
+IMPLEMENT_SAVERESTORE(CDesertEagle, CBasePlayerWeapon);

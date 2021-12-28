@@ -331,6 +331,29 @@ cvar_t	sk_plr_rpg2 = {"sk_plr_rpg2","0"};
 cvar_t	sk_plr_rpg3 = {"sk_plr_rpg3","0"};
 
 
+// Minigun Round
+cvar_t	sk_plr_minigun_bullet1 = { "sk_plr_minigun_bullet1", "0" };
+cvar_t	sk_plr_minigun_bullet2 = { "sk_plr_minigun_bullet2", "0" };
+cvar_t	sk_plr_minigun_bullet3 = { "sk_plr_minigun_bullet3", "0" };
+
+// AK47 Round
+cvar_t	sk_plr_ak47_bullet1 = { "sk_plr_ak47_bullet1", "0" };
+cvar_t	sk_plr_ak47_bullet2 = { "sk_plr_ak47_bullet2", "0" };
+cvar_t	sk_plr_ak47_bullet3 = { "sk_plr_ak47_bullet3", "0" };
+
+// Swort whack
+cvar_t	sk_plr_swort1 = { "sk_plr_swort1", "0" };
+cvar_t	sk_plr_swort2 = { "sk_plr_swort2", "0" };
+cvar_t	sk_plr_swort3 = { "sk_plr_swort3", "0" };
+
+
+// Sniper Rifle
+cvar_t sk_plr_snpr_bullet1 = { "sk_plr_snpr_bullet1", "0" };
+cvar_t sk_plr_snpr_bullet2 = { "sk_plr_snpr_bullet2", "0" };
+cvar_t sk_plr_snpr_bullet3 = { "sk_plr_snpr_bullet3", "0" };
+
+
+
 // Zero Point Generator
 cvar_t	sk_plr_gauss1 = {"sk_plr_gauss1","0"};
 cvar_t	sk_plr_gauss2 = {"sk_plr_gauss2","0"};
@@ -800,6 +823,22 @@ void GameDLLInit( void )
 	CVAR_REGISTER ( &sk_plr_tripmine1 );// {"sk_plr_tripmine1","0"};
 	CVAR_REGISTER ( &sk_plr_tripmine2 );// {"sk_plr_tripmine2","0"};
 	CVAR_REGISTER ( &sk_plr_tripmine3 );// {"sk_plr_tripmine3","0"};
+
+
+	// Minigun Round
+	CVAR_REGISTER(&sk_plr_minigun_bullet1);// {"sk_plr_minigun_bullet1","0"};
+	CVAR_REGISTER(&sk_plr_minigun_bullet2);// {"sk_plr_minigun_bullet2","0"};
+	CVAR_REGISTER(&sk_plr_minigun_bullet3);// {"sk_plr_minigun_bullet3","0"};
+
+	// Swort whack
+	CVAR_REGISTER(&sk_plr_swort1);// {"sk_plr_swort1","0"};
+	CVAR_REGISTER(&sk_plr_swort2);// {"sk_plr_swort2","0"};
+	CVAR_REGISTER(&sk_plr_swort3);// {"sk_plr_swort3","0"};
+
+	// Sniper Rifle
+	CVAR_REGISTER(&sk_plr_snpr_bullet1);// {"sk_plr_bullet1","0"};
+	CVAR_REGISTER(&sk_plr_snpr_bullet2);// {"sk_plr_bullet2","0"};
+	CVAR_REGISTER(&sk_plr_snpr_bullet3);// {"sk_plr_bullet3","0"};
 
 
 	// WORLD WEAPONS

@@ -167,6 +167,21 @@ void CHalfLifeMultiplay::RefreshSkillData( void )
 
 	// hornet
 	gSkillData.plrDmgHornet = 10;
+
+	// Minigun Round
+	gSkillData.plrDmgMinigun = 20;
+
+	// AK47 Round
+	gSkillData.plrDmgak47 = 30;
+
+	// Hand Round
+	gSkillData.plrDmgHands = 10;
+
+	// Swort whack
+	gSkillData.plrDmgSwort = 50;
+
+	// Rifle
+	gSkillData.plrDmgSniper = 100;
 }
 
 // longest the intermission can last, in seconds
