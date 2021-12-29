@@ -360,6 +360,7 @@ void W_Precache(void)
 	// python
 	UTIL_PrecacheOtherWeapon( "weapon_357" );
 	UTIL_PrecacheOther( "ammo_357" );
+	UTIL_PrecacheOtherWeapon("weapon_eagle");
 #endif
 	
 #if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
