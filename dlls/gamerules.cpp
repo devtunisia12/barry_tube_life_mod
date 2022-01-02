@@ -222,6 +222,9 @@ void CGameRules::RefreshSkillData ( void )
 	// Sentry Turret
 	gSkillData.sentryHealth = GetSkillCvar( "sk_sentry_health");
 
+	// BoyHanded
+	gSkillData.boyhandedHealth = GetSkillCvar("sk_boyhanded_health");
+
 // PLAYER WEAPONS
 
 	// Crowbar whack

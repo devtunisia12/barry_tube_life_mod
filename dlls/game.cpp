@@ -279,6 +279,12 @@ cvar_t	sk_sentry_health1 = {"sk_sentry_health1","0"};
 cvar_t	sk_sentry_health2 = {"sk_sentry_health2","0"};
 cvar_t	sk_sentry_health3 = {"sk_sentry_health3","0"};
 
+// Boyhanded
+cvar_t	sk_boyhanded_health1 = { "sk_boyhanded_health1", "0" };
+cvar_t	sk_boyhanded_health2 = { "sk_boyhanded_health2", "0" };
+cvar_t	sk_boyhanded_health3 = { "sk_boyhanded_health3", "0" };
+
+
 
 // PLAYER WEAPONS
 
@@ -738,6 +744,12 @@ void GameDLLInit( void )
 	CVAR_REGISTER ( &sk_sentry_health1 );// {"sk_sentry_health1","0"};
 	CVAR_REGISTER ( &sk_sentry_health2 );// {"sk_sentry_health2","0"};
 	CVAR_REGISTER ( &sk_sentry_health3 );// {"sk_sentry_health3","0"};
+
+
+	// BoyHanded
+	CVAR_REGISTER(&sk_boyhanded_health1);// {"sk_boyhanded_health1","0"};
+	CVAR_REGISTER(&sk_boyhanded_health2);// {"sk_boyhanded_health3","0"};
+	CVAR_REGISTER(&sk_boyhanded_health3);// {"sk_boyhanded_health3","0"};
 
 
 	// PLAYER WEAPONS
