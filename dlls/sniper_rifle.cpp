@@ -127,10 +127,10 @@ void CSniperrifle::SecondaryAttack()
 		PlayEmptySound(); // sound effect
 		WeaponIdle(); // just put this here
 	}
-	else if (m_pPlayer->pev->fov != 15)
+	else if (m_pPlayer->pev->fov != 20)
 	{
 		SendWeaponAnim(SNIPER_ZOOM_ON, 0, 0); // sight on anim // if u dont have an anim you can delete this line
-		m_pPlayer->pev->fov = m_pPlayer->m_iFOV = 80; // zoom
+		m_pPlayer->pev->fov = m_pPlayer->m_iFOV = 20; // zoom
 		m_fInZoom = 1;
 		PlayEmptySound(); // sound effect
 		WeaponIdle(); // just put this here
