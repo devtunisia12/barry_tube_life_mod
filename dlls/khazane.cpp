@@ -757,7 +757,7 @@ void CKhazane::Spawn()
 	pev->solid = SOLID_SLIDEBOX;
 	pev->movetype = MOVETYPE_STEP;
 	m_bloodColor = BLOOD_COLOR_GREEN;
-	pev->health = gSkillData.gargantuaHealth;
+	pev->health = 500;
 	//pev->view_ofs		= Vector ( 0, 0, 96 );// taken from mdl file
 	m_flFieldOfView = -0.2;// width of forward view cone ( as a dotproduct result )
 	m_MonsterState = MONSTERSTATE_NONE;
@@ -851,16 +851,19 @@ void CKhazane::TraceAttack(entvars_t *pevAttacker, float flDamage, Vector vecDir
 
 int CKhazane::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType)
 {
-	ALERT(at_aiconsole, "CKhazane::TakeDamage\n");
-
-	if (IsAlive())
+	// Take 30% damage from bullets
+	if (bitsDamageType == DMG_BULLET)
 	{
-		if (!(bitsDamageType & GARG_DAMAGE))
-			flDamage *= 0.01;
-		if (bitsDamageType & DMG_BLAST)
-			SetConditions(bits_COND_LIGHT_DAMAGE);
+		Vector vecDir = pev->origin - (pevInflictor->absmin + pevInflictor->absmax) * 0.5;
+		vecDir = vecDir.Normalize();
+		float flForce = DamageForce(flDamage);
+		pev->velocity = pev->velocity + vecDir * flForce;
+		flDamage *= 0.3;
 	}
 
+	// HACK HACK -- until we fix this.
+	if (IsAlive())
+		PainSound();
 	return CBaseMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
 }
 
