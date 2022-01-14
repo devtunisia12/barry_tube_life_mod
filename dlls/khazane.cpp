@@ -226,6 +226,11 @@ public:
 	void Killed(entvars_t *pevAttacker, int iGib);
 	void DeathEffect(void);
 
+	void PainSound(void);
+	void AlertSound(void);
+	void IdleSound(void);
+	void AttackSound(void);
+
 	void EyeOff(void);
 	void EyeOn(int level);
 	void EyeUpdate(void);
@@ -335,33 +340,33 @@ const char *CKhazane::pFootSounds[] =
 
 const char *CKhazane::pIdleSounds[] =
 {
-	"garg/gar_idle1.wav",
-	"garg/gar_idle2.wav",
-	"garg/gar_idle3.wav",
-	"garg/gar_idle4.wav",
-	"garg/gar_idle5.wav",
+	"khazane/gar_idle1.wav",
+	"khazane/gar_idle2.wav",
+	"khazane/gar_idle3.wav",
+	"khazane/gar_idle4.wav",
+	"khazane/gar_idle5.wav",
 };
 
 
 const char *CKhazane::pAttackSounds[] =
 {
-	"garg/gar_attack1.wav",
-	"garg/gar_attack2.wav",
-	"garg/gar_attack3.wav",
+	"khazane/gar_attack1.wav",
+	"khazane/gar_attack2.wav",
+	"khazane/gar_attack3.wav",
 };
 
 const char *CKhazane::pAlertSounds[] =
 {
-	"garg/gar_alert1.wav",
-	"garg/gar_alert2.wav",
-	"garg/gar_alert3.wav",
+	"khazane/gar_alert1.wav",
+	"khazane/gar_alert2.wav",
+	"khazane/gar_alert3.wav",
 };
 
 const char *CKhazane::pPainSounds[] =
 {
-	"garg/gar_pain1.wav",
-	"garg/gar_pain2.wav",
-	"garg/gar_pain3.wav",
+	"khazane/gar_pain1.wav",
+	"khazane/gar_pain2.wav",
+	"khazane/gar_pain3.wav",
 };
 
 const char *CKhazane::pStompSounds[] =
@@ -756,7 +761,7 @@ void CKhazane::Spawn()
 
 	pev->solid = SOLID_SLIDEBOX;
 	pev->movetype = MOVETYPE_STEP;
-	m_bloodColor = BLOOD_COLOR_GREEN;
+	m_bloodColor = BLOOD_COLOR_RED;
 	pev->health = 500;
 	//pev->view_ofs		= Vector ( 0, 0, 96 );// taken from mdl file
 	m_flFieldOfView = -0.2;// width of forward view cone ( as a dotproduct result )
@@ -898,6 +903,7 @@ void CKhazane::Killed(entvars_t *pevAttacker, int iGib)
 	EyeOff();
 	UTIL_Remove(m_pEyeGlow);
 	m_pEyeGlow = NULL;
+	UTIL_ScreenShake(pev->origin, 4.0, 3.0, 1.0, 750);
 	CBaseMonster::Killed(pevAttacker, GIB_NEVER);
 }
 
@@ -958,6 +964,40 @@ BOOL CKhazane::CheckRangeAttack1(float flDot, float flDist)
 }
 
 
+//Sounds
+void CKhazane::PainSound(void)
+{
+	int pitch = 95 + RANDOM_LONG(0, 9);
+
+	if (RANDOM_LONG(0, 5) < 2)
+		EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, pPainSounds[RANDOM_LONG(0, ARRAYSIZE(pPainSounds) - 1)], 1.0, ATTN_NORM, 0, pitch);
+	UTIL_ScreenShake(pev->origin, 4.0, 3.0, 1.0, 750);
+}
+
+void CKhazane::AlertSound(void)
+{
+	int pitch = 95 + RANDOM_LONG(0, 9);
+
+	EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, pAlertSounds[RANDOM_LONG(0, ARRAYSIZE(pAlertSounds) - 1)], 1.0, ATTN_NORM, 0, pitch);
+}
+
+void CKhazane::IdleSound(void)
+{
+	int pitch = 100 + RANDOM_LONG(-5, 5);
+
+	// Play a random idle sound
+	EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, pIdleSounds[RANDOM_LONG(0, ARRAYSIZE(pIdleSounds) - 1)], 1.0, ATTN_NORM, 0, pitch);
+}
+
+void CKhazane::AttackSound(void)
+{
+	int pitch = 100 + RANDOM_LONG(-5, 5);
+
+	// Play a random attack sound
+	EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, pAttackSounds[RANDOM_LONG(0, ARRAYSIZE(pAttackSounds) - 1)], 1.0, ATTN_NORM, 0, pitch);
+}
+
+
 
 
 //=========================================================
@@ -994,8 +1034,9 @@ void CKhazane::HandleAnimEvent(MonsterEvent_t *pEvent)
 
 	case GARG_AE_RIGHT_FOOT:
 	case GARG_AE_LEFT_FOOT:
-		UTIL_ScreenShake(pev->origin, 4.0, 3.0, 1.0, 750);
+		UTIL_ScreenShake(pev->origin, 12.0, 100.0, 2.0, 1000);
 		EMIT_SOUND_DYN(edict(), CHAN_BODY, pFootSounds[RANDOM_LONG(0, ARRAYSIZE(pFootSounds) - 1)], 1.0, ATTN_GARG, 0, PITCH_NORM + RANDOM_LONG(-10, 10));
+		AttackSound();
 		break;
 
 	case GARG_AE_STOMP:
@@ -1005,6 +1046,7 @@ void CKhazane::HandleAnimEvent(MonsterEvent_t *pEvent)
 
 	case GARG_AE_BREATHE:
 		EMIT_SOUND_DYN(edict(), CHAN_VOICE, pBreatheSounds[RANDOM_LONG(0, ARRAYSIZE(pBreatheSounds) - 1)], 1.0, ATTN_GARG, 0, PITCH_NORM + RANDOM_LONG(-10, 10));
+		UTIL_ScreenShake(pev->origin, 12.0, 100.0, 2.0, 1000);
 		break;
 
 	default:
