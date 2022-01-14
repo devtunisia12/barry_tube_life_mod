@@ -289,11 +289,11 @@ void CBoybow::GibMonster(void)
 		CBaseEntity *pGun;
 		if (FBitSet(pev->weapons, HMASSN_SHOTGUN))
 		{
-			pGun = DropItem("weapon_crossbow", vecGunPos, vecGunAngles);
+			pGun = DropItem("weapon_9mmhandgun", vecGunPos, vecGunAngles);
 		}
 		else
 		{
-			pGun = DropItem("weapon_crossbow", vecGunPos, vecGunAngles);
+			pGun = DropItem("weapon_9mmhandgun", vecGunPos, vecGunAngles);
 		}
 		if (pGun)
 		{
@@ -303,7 +303,7 @@ void CBoybow::GibMonster(void)
 
 		if (FBitSet(pev->weapons, HMASSN_GRENADELAUNCHER))
 		{
-			pGun = DropItem("ammo_bolts", vecGunPos, vecGunAngles);
+			pGun = DropItem("ammo_9mmclip", vecGunPos, vecGunAngles);
 			if (pGun)
 			{
 				pGun->pev->velocity = Vector(RANDOM_FLOAT(-100, 100), RANDOM_FLOAT(-100, 100), RANDOM_FLOAT(200, 300));
