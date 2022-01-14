@@ -855,7 +855,7 @@ void CBoybow::Shotgun(void)
 
 	Vector	vecShellVelocity = gpGlobals->v_right * RANDOM_FLOAT(40, 90) + gpGlobals->v_up * RANDOM_FLOAT(75, 200) + gpGlobals->v_forward * RANDOM_FLOAT(-40, 40);
 	EjectBrass(vecShootOrigin - vecShootDir * 24, vecShellVelocity, pev->angles.y, m_iShotgunShell, TE_BOUNCE_SHOTSHELL);
-	FireBullets(gSkillData.hgruntShotgunPellets, vecShootOrigin, vecShootDir, VECTOR_CONE_15DEGREES, 2048, BULLET_PLAYER_BUCKSHOT, 0); // shoot +-7.5 degrees
+	FireBullets(gSkillData.hgruntShotgunPellets, vecShootOrigin, vecShootDir, VECTOR_CONE_15DEGREES, 2048, BULLET_MONSTER_9MM, 0); // shoot +-7.5 degrees
 
 	pev->effects |= EF_MUZZLEFLASH;
 
@@ -889,7 +889,7 @@ void CBoybow::HandleAnimEvent(MonsterEvent_t *pEvent)
 							   // now spawn a gun.
 							   if (FBitSet(pev->weapons, HMASSN_SHOTGUN))
 							   {
-								   DropItem("weapon_shotgun", vecGunPos, vecGunAngles);
+								   DropItem("weapon_9mmhandgun", vecGunPos, vecGunAngles);
 							   }
 							   else
 							   {
@@ -960,7 +960,7 @@ void CBoybow::HandleAnimEvent(MonsterEvent_t *pEvent)
 							 {
 								 Shotgun();
 
-								 EMIT_SOUND(ENT(pev), CHAN_WEAPON, "weapons/sbarrel1.wav", 1, ATTN_NORM);
+								 EMIT_SOUND(ENT(pev), CHAN_WEAPON, "weapons/pl_gun1.wav", 1, ATTN_NORM);
 							 }
 
 							 CSoundEnt::InsertSound(bits_SOUND_COMBAT, pev->origin, 384, 0.3);
